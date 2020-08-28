@@ -1,0 +1,57 @@
+{
+    "name": "onza-me/images",
+    "description": "Package for handle and prepare images on Onza.Me projects",
+    "keywords": [
+        "onza-me",
+        "domda_backend_laravel_package_template"
+    ],
+    "homepage": "https://github.com/onza-me/domda_backend_laravel_package_template",
+    "license": "The Unlicense",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Yurij Karpov",
+            "email": "acrossoffwest@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "illuminate/support": "^7.0",
+        "intervention/image": "^2.5",
+        "kraken-io/kraken-php": "^1.6"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^5.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "OnzaMe\\Images\\": "src"
+        },
+        "files": ["src/Helpers/helpers.php"]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "OnzaMe\\Images\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "OnzaMe\\Images\\ImagesServiceProvider"
+            ],
+            "aliases": {
+                "Images": "OnzaMe\\Images\\ImagesFacade"
+            }
+        }
+    }
+}
