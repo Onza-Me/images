@@ -15,7 +15,7 @@ class Images
      */
     public function fit(string $imagepath, int $width = null, int $height = 0)
     {
-        $sizes = config('onzame_images.canvas_sizes_fit_to.limits');
+        $sizes = config('onzame_images.limits.canvas_sizes_fit_to');
 
         (new ImageResize())->fit($imagepath, $width ?? $sizes['width'], $height ?? $sizes['height']);
     }
