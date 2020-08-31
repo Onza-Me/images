@@ -80,7 +80,7 @@ class Images
     public function convert(string $filepath, string $convert2fromat = 'jpg', bool $deleteOldFile = false)
     {
         if ($this->getExt($filepath) === $convert2fromat) {
-            return false;
+            return $filepath;
         } else if (!file_exists($filepath)) {
             logs()->warning('"'.$filepath.'"'.': file not found.');
             return false;
