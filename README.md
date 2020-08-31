@@ -1,5 +1,7 @@
 # onza-me/images package
 
+Main class where you can see main functionality [OnzaMe\Images\Images](https://github.com/Onza-Me/images/blob/master/src/Images.php)
+
 ## Optimization images by Kraken.io
 Optimization images're going through external service [kraken.io](https://kraken.io)
 
