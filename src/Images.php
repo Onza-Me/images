@@ -7,6 +7,20 @@ use Intervention\Image\Facades\Image;
 class Images
 {
     /**
+     * Fit image
+     *
+     * @param string $imagepath
+     * @param int|null $width
+     * @param int $height
+     */
+    public function fit(string $imagepath, int $width = null, int $height = 0)
+    {
+        $sizes = config('onzame_images.canvas_sizes_fit_to.limits');
+
+        (new ImageResize())->fit($imagepath, $width ?? $sizes['width'], $height ?? $sizes['height']);
+    }
+
+    /**
      * Optimize image by absolute file path
      *
      * @param string $imagepath

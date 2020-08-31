@@ -45,6 +45,20 @@ class ImageResize
     }
 
     /**
+     * @param string $imagepath
+     * @param int $width
+     * @param int $height
+     */
+    public function fit(string $imagepath, int $width, int $height)
+    {
+        $img = ImageFacade::make($imagepath);
+        $img = $img->fit($width, $height, function ($constraint) {
+            $constraint->upsize();
+        });
+        $img->save($imagepath);
+    }
+
+    /**
      * @param Image $img
      * @param $width
      * @param $height
