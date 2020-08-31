@@ -13,7 +13,7 @@ class Images
      * @param int|null $width
      * @param int $height
      */
-    public function fit(string $imagepath, int $width = null, int $height = 0)
+    public function fit(string $imagepath, int $width = null, int $height = null)
     {
         $sizes = config('onzame_images.limits.canvas_sizes_fit_to');
 
