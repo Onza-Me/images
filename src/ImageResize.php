@@ -3,6 +3,8 @@ namespace OnzaMe\Images;
 
 use Intervention\Image\Facades\Image as ImageFacade;
 use Intervention\Image\Image;
+use OnzaMe\Images\Exceptions\ImageTypePreviewSizeForSpecificPreviewNameNotFoundException;
+use OnzaMe\Images\Exceptions\ImageTypePreviewSizesNotFoundException;
 use OnzaMe\Images\Exceptions\SourceImageFileNotFountException;
 
 class ImageResize
@@ -12,16 +14,12 @@ class ImageResize
      * @param int $width
      * @param int $height
      * @param int $quality
-     * @param bool $skipOptimize
      * @return string
      * @throws SourceImageFileNotFountException
      */
     public function resize(string $filepath, int $width, int $height, int $quality = 80): string
     {
-        if (!file_exists($filepath)) {
-            throw new SourceImageFileNotFountException($filepath);
-        }
-
+        throw_if(!file_exists($filepath), new SourceImageFileNotFountException($filepath));
         $img = ImageFacade::make($filepath);
         $cropFilepath = $this->getResizedFilepath($filepath, $width, $height);
 
@@ -30,6 +28,20 @@ class ImageResize
             ->save($cropFilepath, $quality);
 
         return $cropFilepath;
+    }
+
+    public function getPreviewSizes(string $imageType = 'default'): array
+    {
+        $sizes = config('onzame_images.limits.preview_canvas_sizes.'.$imageType);
+        throw_if(empty($sizes), new ImageTypePreviewSizesNotFoundException($imageType));
+        return $sizes;
+    }
+
+    public function getPreviewSize(string $imageType = 'default', string $specificPreviewSizeName = 'default'): array
+    {
+        $previewSizes = $this->getPreviewSizes($imageType);
+        throw_if(!isset($previewSizes[$specificPreviewSizeName]), new ImageTypePreviewSizeForSpecificPreviewNameNotFoundException($imageType, $specificPreviewSizeName));
+        return $previewSizes[$specificPreviewSizeName];
     }
 
     /**

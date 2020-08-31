@@ -12,4 +12,9 @@ class ExampleTest extends BaseTest
         $this->assertIsArray(get_request_rules_for('photos'));
         $this->assertIsString(get_request_rules_for_as_string('photos'));
     }
+
+    public function test_preview_canvas_sizes()
+    {
+        $this->assertIsArray(config('onzame_images.limits.preview_canvas_sizes'));
+    }
 }

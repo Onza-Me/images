@@ -26,6 +26,43 @@ if (!function_exists('convert_canvas_limits_to_array')) {
     }
 }
 
+if (!function_exists('convert_preview_canvas_limits_to_array')) {
+    function convert_preview_canvas_limits_to_array(string $str)
+    {
+        $types = explode(';', $str);
+
+        $result = [];
+        foreach ($types as $typeStr) {
+            [$type, $limits] = explode(':', $typeStr);
+            $previewSizes = explode(',', $limits);
+            $sizes = [];
+            foreach ($previewSizes as $previewSize) {
+                $explodedPreviewSize = explode('|', $previewSize);
+                $previewName = 'default';
+                $size = [];
+                if (count($explodedPreviewSize) < 2) {
+                    $explodedSize = explode('*', $explodedPreviewSize[0]);
+                    $size = [
+                        'width' => intval($explodedSize[0]),
+                        'height' => intval($explodedSize[1]),
+                    ];
+                } else {
+                    $previewName = $explodedPreviewSize[0];
+                    $explodedSize = explode('*', $explodedPreviewSize[1]);
+                    $size = [
+                        'width' => intval($explodedSize[0]),
+                        'height' => intval($explodedSize[1]),
+                    ];
+                }
+                $sizes[$previewName] = $size;
+            }
+
+            $result[$type] = $sizes;
+        }
+        return $result;
+    }
+}
+
 if (!function_exists('get_request_rules_for')) {
     function get_request_rules_for(string $type = 'default'): array
     {
