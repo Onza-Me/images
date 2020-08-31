@@ -66,7 +66,7 @@ class Images
     private function getExt(string $filepath): string
     {
         $explodeUrl = explode('.', $filepath);
-        return $explodeUrl[count($explodeUrl) - 1];
+        return strtolower($explodeUrl[count($explodeUrl) - 1]);
     }
 
     /**
