@@ -103,7 +103,7 @@ class Images
         $newFilepath = $this->getNewFilepathForConvertedFile($filepath, $convert2fromat);
         Image::make($filepath)
             ->encode($convert2fromat)
-            ->save($newFilepath);
+            ->save($newFilepath)->destroy();
 
         if ($deleteOldFile) {
             unlink($filepath);

@@ -25,7 +25,8 @@ class ImageResize
 
         $this->fitImage($img, $width, $height)
             ->resize($width, $height)
-            ->save($cropFilepath, $quality);
+            ->save($cropFilepath, $quality)
+            ->destroy();
 
         return $cropFilepath;
     }
@@ -55,7 +56,7 @@ class ImageResize
         $img = $img->fit($width, $height, function ($constraint) {
             $constraint->upsize();
         });
-        $img->save($imagepath);
+        $img->save($imagepath)->destroy();
     }
 
     /**

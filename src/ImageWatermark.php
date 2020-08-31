@@ -13,7 +13,7 @@ class ImageWatermark
         $waterMarkPath = $watermarkPath ?? $this->getDefaultWatermarkPath();
         $image = Image::make($imagePath);
         $image->insert($waterMarkPath, 'bottom-right', 5, 5);
-        $image->save($imagePath);
+        $image->save($imagePath)->destroy();
     }
 
     public function getDefaultWatermarkPath()
