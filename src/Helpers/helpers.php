@@ -67,7 +67,8 @@ if (!function_exists('get_request_rules_for')) {
     function get_request_rules_for(string $type = 'default'): array
     {
         $rules = [
-            'max:'.config('onzame_images.limits.file_size')
+            'max:'.config('onzame_images.limits.file_size'),
+            'mimes:'.config('onzame_images.limits.mimes'),
         ];
         $configLimits = config('onzame_images.limits.canvas_sizes.'.$type);
         if (empty($configLimits)) {
