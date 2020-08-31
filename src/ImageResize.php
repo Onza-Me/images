@@ -53,9 +53,18 @@ class ImageResize
     public function fit(string $imagepath, int $width, int $height)
     {
         $img = ImageFacade::make($imagepath);
-        $img = $img->fit($width, $height, function ($constraint) {
-            $constraint->upsize();
-        });
+
+        if ($img->width() > $width) {
+            $img->resize($width, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+        }
+        if ($img->height() > $height) {
+            $img->resize(null, $height, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+        }
+
         $img->save($imagepath)->destroy();
     }
 
