@@ -4,7 +4,7 @@
  * You can place your custom package configuration in here.
  */
 
-[$width, $height] = env('ONZA_ME_IMAGES_CANVAS_SIZES_FIT_TO', '5000*5000');
+[$width, $height] = explode('*', env('ONZA_ME_IMAGES_CANVAS_SIZES_FIT_TO', '5000*5000'));
 
 return [
     'limits' => [
