@@ -59,7 +59,7 @@ class ImagesServiceProvider extends ServiceProvider
             return new Images();
         });
 
-        $this->app->singleton('image', function () {
+        $this->app->singleton('onzame_image', function () {
             return new Images();
         });
 
