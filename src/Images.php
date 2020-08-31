@@ -52,7 +52,7 @@ class Images
     {
         $imageResize = new ImageResize();
 
-        [$width, $height] = $imageResize->getPreviewSize($imageType, $specificPreviewName);
+        ['width' => $width, 'height' => $height] = $imageResize->getPreviewSize($imageType, $specificPreviewName);
 
         return $imageResize->resize($imagepath, $width, $height, $quality);
     }
