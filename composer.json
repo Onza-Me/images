@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "^7.4",
-        "illuminate/support": "^7.0",
+        "illuminate/support": "^7.0|^8.0",
         "intervention/image": "^2.5",
         "kraken-io/kraken-php": "^1.6"
     },
