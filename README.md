@@ -17,3 +17,14 @@ Optimization images're going through external service [kraken.io](https://kraken
     ONZA_ME_IMAGES_PREVIEW_CANVAS_SIZE_LIMITS=default:{preview_name}|{1 preview width}*{1 preview height},{preview_name}|{2 preview width}*{2 preview height};photos:default|480*290,first|360*180,second|180*60
     # File size in kilobytes, default: 10000
     ONZA_ME_IMAGES_MAX_FILE_SIZE=10000
+
+
+## ImageOptimzer class usage:
+
+First of all you have to install software from: [spatie/image-optimizer](https://github.com/spatie/image-optimizer#optimization-tools)
+
+
+    use OnzaMe\Images\Optimizers\ImageOptimizer;
+    
+    $imageOptimizer = new ImageOptimizer();
+    $imageOptimizer->optimizer($imageFilepath, $outputImageFilepath);
