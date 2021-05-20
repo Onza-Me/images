@@ -22,31 +22,18 @@ class FileUploadService
     public function downloadFile(string $url, string $filepath = null)
     {
         $filepath = $this->prepareFilepath($filepath);
-//        try {
-//            $file = fopen($url, 'rb');
-//
-//            if ($file) {
-//                $newFile = fopen($filepath, 'wb');
-//                if ($newFile) {
-//                    while (!feof($file)) {
-//                        fwrite($newFile, fread($file, 1024 * 8), 1024 * 8);
-//                    }
-//                }
-//                !$newFile ?: fclose($newFile);
-//            }
-//            !$file ?: fclose($file);
-//        } catch (\Exception $ex) {
-//            throw $ex;
-//        }
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+            $data = curl_exec($ch);
+            curl_close($ch);
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
-        $data = curl_exec($ch);
-        curl_close($ch);
-
-        file_put_contents($filepath, $data);
+            file_put_contents($filepath, $data);
+        } catch (\Exception $ex) {
+            throw $ex;
+        }
 
         return $filepath;
     }
