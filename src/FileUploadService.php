@@ -10,6 +10,8 @@ namespace OnzaMe\Images;
 
 use Faker\Generator;
 use Illuminate\Http\UploadedFile;
+use OnzaMe\Images\Helpers\InputReader;
+use OnzaMe\Images\Helpers\ParseInputStream;
 
 class FileUploadService
 {
@@ -96,5 +98,55 @@ class FileUploadService
         } while ($repeat);
 
         return $result;
+    }
+
+    /**
+     * @param UploadedFile|Request $request
+     * @param string $parameterKey
+     * @return UploadedFile
+     * @throws Exception
+     */
+    public function getUploadedFile($request, $parameterKey = 'file')
+    {
+        if (is_a($request, UploadedFile::class)) {
+            return $request;
+        }
+
+        $uploadedFile = empty($request->get($parameterKey)) ? $request->file($parameterKey) : $request->get($parameterKey);
+
+        if (empty($uploadedFile)) {
+            $uploadedFile = $this->getUploadedFileBy($this->uploadBinaryFileFromStream($parameterKey));
+        }
+
+        if (empty($uploadedFile)) {
+            throw new UnproccessableHttpRequestException('', '', [
+                $parameterKey => 'Something went wrong'
+            ]);
+        }
+
+        return $uploadedFile;
+    }
+
+    /**
+     * @param $parameterKey
+     * @return string
+     * @throws UnproccessableHttpRequestException
+     */
+    public function uploadBinaryFileFromStream($parameterKey): string
+    {
+        $params = [];
+        new ParseInputStream($params);
+        $fileBinaryData = InputReader::instance()->readAll();
+
+        if (empty($fileBinaryData)) {
+            throw new UnproccessableHttpRequestException('', '', [
+                $parameterKey => 'Empty file'
+            ]);
+        }
+
+        $fileTmpPath = $this->getTmpFilepath();
+        file_put_contents($fileTmpPath, $fileBinaryData);
+
+        return $fileTmpPath;
     }
 }
