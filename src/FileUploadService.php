@@ -12,6 +12,7 @@ use Faker\Generator;
 use Illuminate\Http\UploadedFile;
 use OnzaMe\Images\Helpers\InputReader;
 use OnzaMe\Images\Helpers\ParseInputStream;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class FileUploadService
 {
@@ -119,7 +120,7 @@ class FileUploadService
         }
 
         if (empty($uploadedFile)) {
-            throw new UnproccessableHttpRequestException('', '', [
+            throw new BadRequestException('', '', [
                 $parameterKey => 'Something went wrong'
             ]);
         }
@@ -145,7 +146,7 @@ class FileUploadService
     /**
      * @param $parameterKey
      * @return string
-     * @throws UnproccessableHttpRequestException
+     * @throws BadRequestException
      */
     public function uploadBinaryFileFromStream($parameterKey): string
     {
@@ -154,7 +155,7 @@ class FileUploadService
         $fileBinaryData = InputReader::instance()->readAll();
 
         if (empty($fileBinaryData)) {
-            throw new UnproccessableHttpRequestException('', '', [
+            throw new BadRequestException('', '', [
                 $parameterKey => 'Empty file'
             ]);
         }
