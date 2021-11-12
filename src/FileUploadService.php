@@ -128,6 +128,21 @@ class FileUploadService
     }
 
     /**
+     * @param string $absolutePath
+     * @return UploadedFile
+     */
+    public function getUploadedFileBy(string $absolutePath): UploadedFile
+    {
+        $explodedPath = explode('/', $absolutePath);
+        $fileTmp = new \Symfony\Component\HttpFoundation\File\UploadedFile(
+            $absolutePath,
+            $explodedPath[count($explodedPath) - 1]
+        );
+
+        return UploadedFile::createFromBase($fileTmp);
+    }
+
+    /**
      * @param $parameterKey
      * @return string
      * @throws UnproccessableHttpRequestException
