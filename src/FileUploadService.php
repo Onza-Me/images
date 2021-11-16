@@ -10,9 +10,9 @@ namespace OnzaMe\Images;
 
 use Faker\Generator;
 use Illuminate\Http\UploadedFile;
+use OnzaMe\Images\Exceptions\RequestImageNotFound;
 use OnzaMe\Images\Helpers\InputReader;
 use OnzaMe\Images\Helpers\ParseInputStream;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class FileUploadService
 {
@@ -105,7 +105,7 @@ class FileUploadService
      * @param UploadedFile|Request $request
      * @param string $parameterKey
      * @return UploadedFile
-     * @throws Exception
+     * @throws RequestImageNotFound
      */
     public function getUploadedFile($request, $parameterKey = 'file')
     {
@@ -120,9 +120,7 @@ class FileUploadService
         }
 
         if (empty($uploadedFile)) {
-            throw new BadRequestException('', '', [
-                $parameterKey => 'Something went wrong'
-            ]);
+            throw new RequestImageNotFound( $parameterKey);
         }
 
         return $uploadedFile;
@@ -146,7 +144,7 @@ class FileUploadService
     /**
      * @param $parameterKey
      * @return string
-     * @throws BadRequestException
+     * @throws RequestImageNotFound
      */
     public function uploadBinaryFileFromStream($parameterKey): string
     {
@@ -155,9 +153,7 @@ class FileUploadService
         $fileBinaryData = InputReader::instance()->readAll();
 
         if (empty($fileBinaryData)) {
-            throw new BadRequestException('', 0, [
-                $parameterKey => 'Empty file'
-            ]);
+            throw new RequestImageNotFound( $parameterKey);
         }
 
         $fileTmpPath = $this->getTmpFilepath();
