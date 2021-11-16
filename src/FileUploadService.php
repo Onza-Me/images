@@ -155,7 +155,7 @@ class FileUploadService
         $fileBinaryData = InputReader::instance()->readAll();
 
         if (empty($fileBinaryData)) {
-            throw new BadRequestException('', '', [
+            throw new BadRequestException('', 0, [
                 $parameterKey => 'Empty file'
             ]);
         }
